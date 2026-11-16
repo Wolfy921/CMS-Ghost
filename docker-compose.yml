@@ -1,0 +1,40 @@
+services:
+  ghost:
+    image: ghost:6
+    container_name: ghost-cms
+    restart: unless-stopped
+    ports:
+      - "3001:2368"
+    environment:
+      url: ${SITE_URL}
+      database__client: mysql
+      database__connection__host: db
+      database__connection__user: ghost
+      database__connection__password: ${DB_PASSWORD}
+      database__connection__database: ghost
+    volumes:
+      - ghost_content:/var/lib/ghost/content
+    depends_on:
+      db:
+        condition: service_healthy
+
+  db:
+    image: mysql:8
+    container_name: ghost-cms-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_USER: ghost
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ghost
+    volumes:
+      - ghost_db:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-p${DB_ROOT_PASSWORD}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  ghost_content:
+  ghost_db:
