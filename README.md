@@ -6,7 +6,7 @@ Despliegue rápido de [Ghost](https://ghost.org/) v6 con MySQL 8 usando Docker C
 
 ## Requisitos
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado y corriendo.aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/) instalado y corriendo.
 
 ## Instalación
 
